@@ -1,0 +1,21 @@
+{
+	"fileVersion": 1,
+	"versions": {
+		"arsd-official": "10.9.10",
+		"bindbc-common": "0.1.6",
+		"bindbc-freetype": "1.2.6",
+		"bindbc-loader": "1.1.5",
+		"bindbc-opengl": "1.1.1",
+		"bindbc-sdl": "1.4.8",
+		"dlangui": "0.10.8",
+		"dsfml": "2.1.1",
+		"fswatch": "0.6.1",
+		"glx-d": "1.1.0",
+		"icontheme": "1.2.3",
+		"inilike": "1.2.2",
+		"isfreedesktop": "0.1.1",
+		"myers_diff-d": "0.0.6",
+		"x11": "1.0.21",
+		"xdgpaths": "0.2.5"
+	}
+}
