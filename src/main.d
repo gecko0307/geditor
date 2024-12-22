@@ -34,6 +34,9 @@ enum IDEActions: int {
     EditTabsToSpaces,
     EditSpacesToTabs,
     EditPreferences,
+    ViewTheme,
+    ViewThemeLight,
+    ViewThemeDark,
     WindowMinimize,
     WindowMaximize,
     WindowRestore,
@@ -51,6 +54,10 @@ const Action ACTION_FILE_SAVE = (new Action(IDEActions.FileSave, "MENU_FILE_SAVE
 const Action ACTION_FILE_SAVE_AS = new Action(IDEActions.FileSaveAs, "MENU_FILE_SAVE_AS"c);
 const Action ACTION_FILE_OPEN = new Action(IDEActions.FileOpen, "MENU_FILE_OPEN"c, "document-open", KeyCode.KEY_O, KeyFlag.Control);
 const Action ACTION_FILE_EXIT = new Action(IDEActions.FileExit, "MENU_FILE_EXIT"c, "document-close"c, KeyCode.KEY_X, KeyFlag.Alt);
+
+const Action ACTION_VIEW_THEME = new Action(IDEActions.ViewTheme, "MENU_VIEW_THEME"c, "view-theme"c);
+const Action ACTION_VIEW_THEME_DEFAULT = new Action(IDEActions.ViewThemeLight, "MENU_VIEW_THEME_DEFAULT"c, "view-theme-default");
+const Action ACTION_VIEW_THEME_DARK = new Action(IDEActions.ViewThemeDark, "MENU_VIEW_THEME_DARK"c, "view-theme-dark");
 
 const Action ACTION_EDIT_COPY = (new Action(EditorActions.Copy, "MENU_EDIT_COPY"c, "edit-copy"c, KeyCode.KEY_C, KeyFlag.Control)).addAccelerator(KeyCode.INS, KeyFlag.Control).disableByDefault();
 const Action ACTION_EDIT_PASTE = (new Action(EditorActions.Paste, "MENU_EDIT_PASTE"c, "edit-paste"c, KeyCode.KEY_V, KeyFlag.Control)).addAccelerator(KeyCode.INS, KeyFlag.Shift).disableByDefault();
@@ -148,16 +155,17 @@ class GESourceEdit: SourceEdit
         
         tokenizer = new DSyntaxSupport();
         content.syntaxSupport = tokenizer;
-        setTokenHightlightColor(TokenCategory.Comment, 0x007f00);
-        setTokenHightlightColor(TokenCategory.Keyword, 0x3300ff);
-        setTokenHightlightColor(TokenCategory.String, 0x7f007f);
-        setTokenHightlightColor(TokenCategory.Integer, 0x007f7f);
-        setTokenHightlightColor(TokenCategory.Float, 0x007f7f);
-        setTokenHightlightColor(TokenCategory.Error, 0xff0000);
-        setTokenHightlightColor(TokenCategory.Op, 0x503000);
-        setTokenHightlightColor(TokenCategory.Identifier_Class, 0x000080);
+
+        setTokenHightlightColor(TokenCategory.Comment, style.customColor("editor_syntax_comment", 0x007f00));
+        setTokenHightlightColor(TokenCategory.Keyword, style.customColor("editor_syntax_keyword", 0x3300ff));
+        setTokenHightlightColor(TokenCategory.String, style.customColor("editor_syntax_string", 0x7f007f));
+        setTokenHightlightColor(TokenCategory.Integer, style.customColor("editor_syntax_number", 0x007f7f));
+        setTokenHightlightColor(TokenCategory.Float, style.customColor("editor_syntax_number", 0x007f7f));
+        setTokenHightlightColor(TokenCategory.Error, style.customColor("editor_syntax_error", 0xff0000));
+        setTokenHightlightColor(TokenCategory.Op, style.customColor("editor_syntax_op", 0x503000));
+        setTokenHightlightColor(TokenCategory.Identifier_Class, style.customColor("editor_syntax_class", 0x000080));
         
-        onThemeChanged();
+        //onThemeChanged();
     }
     
     override bool handleActionStateRequest(const Action a) {
@@ -498,7 +506,7 @@ extern(C) int UIAppMain(string[] args)
     Platform.instance.resourceDirs = resourceDirs;
     
     Platform.instance.uiLanguage = "en";
-    Platform.instance.uiTheme = "theme_gecko";
+    Platform.instance.uiTheme = "theme_default";
     FontManager.hintingMode = HintingMode.Light;
     FontManager.minAnitialiasedFontSize = 0; // 0 means always antialiased
     FontManager.subpixelRenderingMode = SubpixelRenderingMode.RGB;
@@ -572,7 +580,20 @@ extern(C) int UIAppMain(string[] args)
     editItem.add(ACTION_EDIT_PREFERENCES);
     mainMenuItems.add(editItem);
     
-    MenuItem toolsItem = new MenuItem(new Action(3, "MENU_TOOLS"c));
+    MenuItem viewItem = new MenuItem(new Action(3, "MENU_VIEW"c));
+    MenuItem themeItem = new MenuItem(ACTION_VIEW_THEME);
+    themeItem.add(ACTION_VIEW_THEME_DEFAULT);
+    themeItem.add(ACTION_VIEW_THEME_DARK);
+    auto themeItemDefault = themeItem.subitem(0);
+    auto themeItemDark = themeItem.subitem(1);
+    themeItemDefault.type = MenuItemType.Radio;
+    themeItemDefault.checked = true;
+    themeItemDark.type = MenuItemType.Radio;
+    themeItemDark.checked = false;
+    viewItem.add(themeItem);
+    mainMenuItems.add(viewItem);
+    
+    MenuItem toolsItem = new MenuItem(new Action(4, "MENU_TOOLS"c));
     MenuItem lineEndingsItem = new MenuItem(ACTION_TOOLS_LINE_ENDINGS);
     lineEndingsItem.add(ACTION_TOOLS_LINE_ENDING_LF);
     lineEndingsItem.add(ACTION_TOOLS_LINE_ENDING_CRLF);
@@ -585,13 +606,13 @@ extern(C) int UIAppMain(string[] args)
     toolsItem.add(lineEndingsItem);
     mainMenuItems.add(toolsItem);
     
-    MenuItem windowItem = new MenuItem(new Action(4, "MENU_WINDOW"c));
+    MenuItem windowItem = new MenuItem(new Action(5, "MENU_WINDOW"c));
     windowItem.add(ACTION_WINDOW_MINIMIZE);
     windowItem.add(ACTION_WINDOW_MAXIMIZE);
     windowItem.add(ACTION_WINDOW_RESTORE);
     mainMenuItems.add(windowItem);
     
-    MenuItem helpItem = new MenuItem(new Action(5, "MENU_HELP"c));
+    MenuItem helpItem = new MenuItem(new Action(6, "MENU_HELP"c));
     helpItem.add(ACTION_HELP_VIEW_HELP);
     helpItem.add(ACTION_HELP_ABOUT);
     mainMenuItems.add(helpItem);
@@ -612,7 +633,17 @@ extern(C) int UIAppMain(string[] args)
     
     contentLayout.onAction = delegate(Widget source, const Action a)
     {
-        if (a.id == ACTION_FILE_NEW)
+        if (a.id == ACTION_VIEW_THEME_DEFAULT)
+        {
+            Platform.instance.uiTheme = "theme_default";
+            return true;
+        }
+        else if (a.id == ACTION_VIEW_THEME_DARK)
+        {
+            Platform.instance.uiTheme = "theme_dark";
+            return true;
+        }
+        else if (a.id == ACTION_FILE_NEW)
         {
             TabItem tab = tabs.selectedTab;
             

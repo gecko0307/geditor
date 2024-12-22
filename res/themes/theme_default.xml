@@ -22,6 +22,11 @@
     <color id="editor_left_pane_line_icon_color_breakpoint" value="#FF0000"/>
     <color id="editor_left_pane_line_icon_color_bookmark" value="#0000FF"/>
     <color id="editor_left_pane_line_icon_color_error" value="#80FF0000"/>
+    
+    <color id="editor_syntax_comment" value="#007F00"/>
+    <color id="editor_syntax_keyword" value="#3300FF"/>
+    <color id="editor_syntax_string" value="#7F007F"/>
+    <color id="editor_syntax_number" value="#007F7F"/>
 
     <color id="grid_selection_color" value="#804040FF"/>
     <color id="grid_selection_color_row" value="#C0A0B0FF"/>

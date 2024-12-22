@@ -78,7 +78,7 @@
         backgroundImageId="@null"
         margins="2,2,2,2"
         padding="2,2,2,2"
-	focusRectColors="@null"
+    focusRectColors="@null"
         />
     <style id="CHECKBOX_IMAGE" parent="BUTTON_IMAGE"
         align="Center"
@@ -86,7 +86,7 @@
         />
     <style id="CHECKBOX_LABEL" parent="BUTTON_LABEL"
         align="Left|VCenter"
-	focusRectColors="#000"
+    focusRectColors="#000"
         >
         <state state_enabled="true" state_hovered="true" textColor="#006080"/>
         <state state_enabled="false" textColor="#909090"/>
@@ -101,7 +101,7 @@
         />
     <style id="RADIOBUTTON_LABEL" parent="CHECKBOX_LABEL"
         align="Left|VCenter"
-	focusRectColors="#000"
+    focusRectColors="#000"
         >
         <state state_enabled="true" state_hovered="true" textColor="#006080"/>
         <state state_enabled="false" textColor="#909090"/>
@@ -234,7 +234,7 @@
     <style id="MAIN_MENU"
         layoutWidth="FILL_PARENT"
         backgroundImageId="main_menu_background"
-	layoutWeight="0"
+    layoutWeight="0"
         />
     <style id="MAIN_MENU_ITEM"
         padding="3pt,2pt,3pt,2pt"
@@ -298,7 +298,7 @@
         padding="2pt,2pt,2pt,2pt"
         minWidth="40"
         align="Left|VCenter"
-	focusRectColors="#000"
+    focusRectColors="#000"
         />
     <style id="COMBO_BOX_BUTTON"
         padding="2pt,2pt,2pt,2pt"
@@ -374,7 +374,7 @@
         layoutWidth="FILL_PARENT"
         layoutHeight="WRAP_CONTENT"
         padding="1pt,1pt,1pt,1pt"
-	layoutWeight="0"
+    layoutWeight="0"
         />
     <style id="DOCK_HOST"
         backgroundColor="#eceffa"
@@ -433,7 +433,7 @@
         layoutHeight="WRAP_CONTENT"
         margins="2pt,5pt,2pt,1pt"
         padding="2pt,2pt,2pt,2pt"
-	textColor="#404040"
+    textColor="#404040"
         />
     <style id="TOOLBAR"
         backgroundImageId="toolbar_background"
@@ -505,17 +505,17 @@
 
     <style id="SETTINGS_PAGE_TITLE"
         margins="4pt,4pt,4pt,10pt"
-	fontSize="120%"
-	layoutWeight="0"
+    fontSize="120%"
+    layoutWeight="0"
         layoutWidth="FILL_PARENT"
     />
 
     <style id="RESIZER_VERTICAL"
         layoutWidth="FILL_PARENT"
         layoutHeight="WRAP_CONTENT"
-	minHeight="7pt"
-	maxHeight="7pt"
-	backgroundColor="#E0E0E0">
+    minHeight="7pt"
+    maxHeight="7pt"
+    backgroundColor="#E0E0E0">
         <state state_focused="true" backgroundColor="#40C0C000"/>
         <state state_pressed="true" backgroundColor="#4080C000"/>
         <state state_selected="true" backgroundColor="#00F8F9Fa"/>
@@ -524,9 +524,9 @@
     <style id="RESIZER_HORIZONTAL"
         layoutWidth="FILL_PARENT"
         layoutHeight="WRAP_CONTENT"
-	minWidth="7pt"
-	maxWidth="7pt"
-	backgroundColor="#E0E0E0">
+    minWidth="7pt"
+    maxWidth="7pt"
+    backgroundColor="#E0E0E0">
         <state state_focused="true" backgroundColor="#40C0C000"/>
         <state state_pressed="true" backgroundColor="#4080C000"/>
         <state state_selected="true" backgroundColor="#00F8F9Fa"/>
@@ -542,7 +542,7 @@
 
     <style id="GROUP_BOX_CAPTION"
         align="Left|VCenter"
-	textColor="#504840"
+    textColor="#504840"
         padding="1pt,1pt,1pt,1pt">
     </style>
 
