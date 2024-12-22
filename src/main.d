@@ -476,8 +476,16 @@ extern(C) int UIAppMain(string[] args)
     
     int newFileNum = 1;
     
-    auto appDataDir = environment.get("APPDATA", "./");
-    string settingsPath = appDataDir ~ "/GeckosEditor";
+    string settingsPath;
+    version(Windows)
+    {
+        auto appDataDir = environment.get("APPDATA", "./");
+        settingsPath = appDataDir ~ "/GeckosEditor";
+    }
+    version(linux)
+    {
+        settingsPath = expandTilde("~/GeckosEditor");
+    }
     mkdirRecurse(settingsPath);
     auto logFile = File(settingsPath ~ "/app.log", "w");
     Log.setFileLogger(&logFile);
